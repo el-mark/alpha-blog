@@ -1,5 +1,7 @@
 class ArticlesController < ApplicationController
 
+  respond_to :docx
+
   before_action :set_article, only: [:edit, :update, :show, :destroy]
 
   def new 
@@ -40,6 +42,21 @@ class ArticlesController < ApplicationController
     flash[:danger] = 'Article was successfully deleted'
 
     redirect_to articles_path
+  end
+
+  def word
+    @article = Article.find(params[:id])
+
+    # respond_with(@article, content: '<html><head></head><body><p>Hello</p></body></html>', filename: 'my_file.docx')
+    # respond_with(@article, filename: 'my_file.docx')
+
+    respond_to do |format|
+      format.docx do
+        render docx: 'word', filename: 'my_file.docx'
+        # Alternatively, if you don't want to create the .docx.erb template you could
+        # render docx: 'my_file.docx', content: '<html><head></head><body><p>Hello</p></body></html>'
+      end
+    end
   end
 
   private
