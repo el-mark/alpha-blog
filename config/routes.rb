@@ -1,5 +1,4 @@
 Rails.application.routes.draw do
-
   root 'pages#home'
 
   get 'about', to: 'pages#about'
@@ -7,5 +6,4 @@ Rails.application.routes.draw do
   resources :articles
 
   get '/articles/:id/word', to: 'articles#word', format: 'docx'
-
 end

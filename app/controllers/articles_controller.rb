@@ -1,10 +1,9 @@
 class ArticlesController < ApplicationController
-
   respond_to :docx
 
-  before_action :set_article, only: [:edit, :update, :show, :destroy]
+  before_action :set_article, only: %i[edit update show destroy]
 
-  def new 
+  def new
     @article = Article.new
   end
 
@@ -22,7 +21,7 @@ class ArticlesController < ApplicationController
     @article = Article.new(article_params)
     if @article.save
       flash[:success] = "Article was saccessfully created"
-      redirect_to article_path(@article)
+      redirect_to @article
     else
       render 'new'
     end
@@ -31,7 +30,7 @@ class ArticlesController < ApplicationController
   def update
     if @article.update(article_params)
       flash[:success] = "Article was saccessfully updated"
-      redirect_to article_path(@article)
+      redirect_to @article
     else
       render 'edit'
     end
@@ -68,5 +67,4 @@ class ArticlesController < ApplicationController
   def article_params
     params.require(:article).permit(:title, :description)
   end
-
 end
